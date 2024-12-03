@@ -46,7 +46,7 @@ public class CurrencyViewModel extends ViewModel {
             public void onResponse(Call<ExchangeRateResponse> call, Response<ExchangeRateResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // Obtendo a taxa de câmbio para a moeda alvo
-                    Double rate = response.body().getRates().get(targetCurrency);
+                    Double rate = response.body().getConversionRates().get(targetCurrency); // Alterado para getConversionRates
                     if (rate != null) {
                         // Calculando o valor convertido
                         double result = amount * rate;

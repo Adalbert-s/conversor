@@ -28,17 +28,18 @@ public class CurrencyConverter {
 
     // Método para realizar a conversão de moeda
     public void convertCurrency(String baseCurrency, String targetCurrency, double amount, final CurrencyConversionListener listener) {
+        // Logando a URL da API
+        Log.d("API_REQUEST", "URL chamada: " + apiService.getExchangeRates(baseCurrency).request().url());
+
         apiService.getExchangeRates(baseCurrency).enqueue(new Callback<ExchangeRateResponse>() {
             @Override
             public void onResponse(Call<ExchangeRateResponse> call, Response<ExchangeRateResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("API_RESPONSE", "Resposta da API: " + response.body().toString());
-
-                    // Obtendo a taxa de câmbio para a moeda alvo
-                    Double rate = response.body().getRates().get(targetCurrency);
+                    Double rate = response.body().getConversionRates().get(targetCurrency);
                     if (rate != null) {
-                        double result = amount * rate;  // Calculando o resultado da conversão
-                        listener.onConversionSuccess(result);  // Enviando o resultado de volta para o listener
+                        double result = amount * rate;
+                        listener.onConversionSuccess(result);
                     } else {
                         listener.onConversionFailure("Taxa de câmbio não encontrada para a moeda alvo.");
                     }
@@ -48,12 +49,14 @@ public class CurrencyConverter {
                 }
             }
 
+
             @Override
             public void onFailure(Call<ExchangeRateResponse> call, Throwable t) {
                 listener.onConversionFailure("Falha na requisição: " + t.getMessage());
             }
         });
     }
+
 
     // Interface para ouvir os resultados da conversão
     public interface CurrencyConversionListener {
