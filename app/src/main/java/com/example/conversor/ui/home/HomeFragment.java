@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,7 +18,8 @@ import com.example.conversor.utils.CurrencyConverter;
 
 public class HomeFragment extends Fragment {
 
-    private EditText editBaseCurrency, editTargetCurrency, editAmount;
+    private Spinner spinnerBaseCurrency, spinnerTargetCurrency;
+    private EditText editAmount;
     private TextView textResult;
     private Button btnConvert;
 
@@ -25,11 +28,21 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Vincular os componentes do layout
-        editBaseCurrency = root.findViewById(R.id.edit_base_currency);
-        editTargetCurrency = root.findViewById(R.id.edit_target_currency);
+        spinnerBaseCurrency = root.findViewById(R.id.spinner_base_currency);
+        spinnerTargetCurrency = root.findViewById(R.id.spinner_target_currency);
         editAmount = root.findViewById(R.id.edit_amount);
         textResult = root.findViewById(R.id.text_result);
         btnConvert = root.findViewById(R.id.btn_convert);
+
+        // Configurar os Spinners
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.currency_list,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerBaseCurrency.setAdapter(adapter);
+        spinnerTargetCurrency.setAdapter(adapter);
 
         // Configurar o botão de conversão
         btnConvert.setOnClickListener(v -> convertCurrency());
@@ -38,13 +51,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void convertCurrency() {
-        String baseCurrency = editBaseCurrency.getText().toString().trim();
-        String targetCurrency = editTargetCurrency.getText().toString().trim();
+        String baseCurrency = spinnerBaseCurrency.getSelectedItem().toString();
+        String targetCurrency = spinnerTargetCurrency.getSelectedItem().toString();
         String amountString = editAmount.getText().toString().trim();
 
-        // Validação básica dos campos
-        if (baseCurrency.isEmpty() || targetCurrency.isEmpty() || amountString.isEmpty()) {
-            Toast.makeText(getContext(), "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show();
+        // Verificar se uma moeda foi selecionada
+        if ("Selecione sua moeda".equals(baseCurrency) || "Selecione sua moeda".equals(targetCurrency)) {
+            Toast.makeText(getContext(), "Por favor, selecione ambas as moedas.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validação básica do valor
+        if (amountString.isEmpty()) {
+            Toast.makeText(getContext(), "Por favor, insira o valor.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -56,7 +75,7 @@ public class HomeFragment extends Fragment {
             return;
         }
 
-        // Instanciar o conversor e realizar a conversão
+        // Conversão de moeda
         CurrencyConverter converter = new CurrencyConverter();
         converter.convertCurrency(baseCurrency, targetCurrency, amount, new CurrencyConverter.CurrencyConversionListener() {
             @Override
@@ -70,4 +89,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 }

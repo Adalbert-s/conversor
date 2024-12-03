@@ -6,34 +6,65 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/text_base_currency_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecione a moeda de entrada:"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
     <!-- Campo para a moeda base -->
-    <EditText
-        android:id="@+id/edit_base_currency"
+    <Spinner
+        android:id="@+id/spinner_base_currency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Moeda atual (ex.: USD)" />
+        android:layout_marginBottom="16dp"
+        android:prompt="@string/select_base_currency" />
 
-    <!-- Campo para a moeda alvo -->
-    <EditText
-        android:id="@+id/edit_target_currency"
+    <TextView
+        android:id="@+id/text_target_currency_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Moeda alvo (ex.: EUR)" />
+        android:text="Selecione a moeda de saída:"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
 
-    <!-- Campo para o valor -->
+    <Spinner
+        android:id="@+id/spinner_target_currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:prompt="@string/select_target_currency" />
+
+    <TextView
+        android:id="@+id/text_amount_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Digite o valor a converter:"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
     <EditText
         android:id="@+id/edit_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Valor a ser convertido"
+        android:hint="Valor que será convertido"
         android:inputType="numberDecimal" />
 
-    <!-- Botão para realizar a conversão -->
     <Button
         android:id="@+id/btn_convert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Converter" />
+
+    <TextView
+        android:id="@+id/text_resultado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Moeda convertida"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
 
     <!-- Texto para exibir o resultado -->
     <TextView
