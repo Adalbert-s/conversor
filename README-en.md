@@ -50,14 +50,7 @@ Mobile application developed in Java using Android Studio to convert values betw
 
 ---
 
-## Contact
-
-For questions or suggestions, contact me at:  
-[Your Name](mailto:seu-email@gmail.com)
-
----
-
-Made with ❤️ by Adalberto (Dalo)
+Made by Adalberto and Diogo
 
 ---
 
