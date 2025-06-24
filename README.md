@@ -54,4 +54,4 @@ Made by Adalberto and Diogo
 
 ---
 
-**Portuguese version available:** [README.md](README.md)
+**Portuguese version available:** [README-pt.md](README-pt.md)
